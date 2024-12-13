@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Tracker</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Proyecto de Raymundo Soto Soto</h1>
+    </header>
+    <main>
+        <div class="map-container">
+            {{ map_html|safe }}
+        </div>
+        <div class="info-container" style="width: 300px; height: 400px;">
+            <h2>Datos GPS</h2>
+            <p>Latitud: {{ gps_data.latitude }}</p>
+            <p>Longitud: {{ gps_data.longitude }}</p>
+            <p>Velocidad: {{ gps_data.speed }} km/h</p>
+            <p>Altitud: {{ gps_data.altitude }} m</p>
+            <p>HDOP: {{ gps_data.hdop }}</p>
+            <p>Satélites: {{ gps_data.satellites }}</p>
+            <p>Hora UTC: {{ gps_data.time }}</p>
+        </div>
+    </main>
+</body>
+</html>
