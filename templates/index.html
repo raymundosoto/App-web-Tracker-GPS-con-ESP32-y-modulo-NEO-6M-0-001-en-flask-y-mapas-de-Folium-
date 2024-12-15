@@ -14,30 +14,43 @@
 </head>
 <body>
     <header>
-        <h1>Proyecto de Raymundo Soto Soto</h1>
+        <h1>GPS Tracker</h1>
     </header>
     <main>
-        <div class="map-container">
-            {{ map_html|safe }}
+        <div class="content">
+            <div class="map-container">
+                {{ map_html|safe }}
+            </div>
+            <div class="info-container">
+                <h2>Datos GPS</h2>
+                <p>Latitud: {{ gps_data.latitude }}</p>
+                <p>Longitud: {{ gps_data.longitude }}</p>
+                <p>Velocidad: {{ gps_data.speed }} km/h</p>
+                <p>Altitud: {{ gps_data.altitude }} m</p>
+                <p>HDOP: {{ gps_data.hdop }}</p>
+                <p>Satélites: {{ gps_data.satellites }}</p>
+                <p>Hora UTC: {{ gps_data.time }}</p>
+            </div>
         </div>
-        <div class="info-container">
-            <h2>Datos GPS</h2>
-            <p>Latitud: {{ gps_data.latitude }}</p>
-            <p>Longitud: {{ gps_data.longitude }}</p>
-            <p>Velocidad: {{ gps_data.speed }} km/h</p>
-            <p>Altitud: {{ gps_data.altitude }} m</p>
-            <p>HDOP: {{ gps_data.hdop }}</p>
-            <p>Satélites: {{ gps_data.satellites }}</p>
-            <p>Hora UTC: {{ gps_data.time }}</p>
-        </div>
-        <div>
-            <form action="/clear" method="post">
-                <button type="submit">Borrar datos</button>
-            </form>
-            <form action="/show" method="get">
-                <button type="submit">Mostrar todos los datos</button>
-            </form>
+        <div class="button-container">
+            <button onclick="clearData()">Borrar Datos</button>
+            <button onclick="showAllData()">Mostrar Todos los Datos</button>
         </div>
     </main>
+    <script>
+        function clearData() {
+            fetch("/clear", { method: "POST" })
+                .then(response => response.json())
+                .then(data => alert(data.message));
+        }
+
+        function showAllData() {
+            fetch("/show_all")
+                .then(response => response.json())
+                .then(data => {
+                    alert("Datos almacenados:\n" + data.data.join("\n"));
+                });
+        }
+    </script>
 </body>
 </html>

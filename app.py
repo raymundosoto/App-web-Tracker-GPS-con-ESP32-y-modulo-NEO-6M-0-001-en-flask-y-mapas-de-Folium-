@@ -1,54 +1,41 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify
 import folium
 import os
-import json
 
 app = Flask(__name__)
 
-# Archivo donde se guardarán las posiciones
-GPS_DATA_FILE = "gps_data.txt"
-
-# Variable global para almacenar las coordenadas
+# Variables globales
 gps_data = {
-    "latitude": 0,
-    "longitude": 0,
-    "speed": 0,
-    "altitude": 0,
-    "hdop": 0,
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "speed": 0.0,
+    "altitude": 0.0,
+    "hdop": 0.0,
     "satellites": 0,
     "time": ""
 }
+route = []  # Para almacenar las coordenadas
+data_file = "gps_data.txt"  # Archivo para almacenar datos GPS
 
-# Ruta principal
+# Página principal
 @app.route("/")
 def index():
-    # Leer posiciones almacenadas
-    if os.path.exists(GPS_DATA_FILE):
-        with open(GPS_DATA_FILE, "r") as file:
-            positions = [json.loads(line.strip()) for line in file.readlines()]
-    else:
-        positions = []
+    # Crear el mapa con la última ubicación
+    m = folium.Map(location=[gps_data["latitude"], gps_data["longitude"]], zoom_start=15)
+    
+    # Dibujar la ruta en el mapa
+    if route:
+        folium.PolyLine(route, color="blue", weight=2.5, opacity=0.8).add_to(m)
+    
+    # Añadir un marcador en la última posición
+    folium.Marker(
+        location=[gps_data["latitude"], gps_data["longitude"]],
+        popup=f"Lat: {gps_data['latitude']}, Lon: {gps_data['longitude']}",
+        tooltip="Última ubicación",
+        icon=folium.Icon(color="red")
+    ).add_to(m)
 
-    # Crear el mapa
-    if positions:
-        last_position = positions[-1]
-        m = folium.Map(location=[last_position["latitude"], last_position["longitude"]], zoom_start=15)
-
-        # Dibujar la ruta
-        route = [[pos["latitude"], pos["longitude"]] for pos in positions]
-        folium.PolyLine(route, color="blue", weight=2.5).add_to(m)
-
-        # Añadir marcador en la última posición
-        folium.Marker(
-            location=[last_position["latitude"], last_position["longitude"]],
-            popup=f"Lat: {last_position['latitude']}, Lon: {last_position['longitude']}",
-            tooltip="Última ubicación",
-        ).add_to(m)
-    else:
-        # Mapa predeterminado si no hay datos
-        m = folium.Map(location=[gps_data["latitude"], gps_data["longitude"]], zoom_start=2)
-
-    # Renderizar mapa en HTML
+    # Renderizar el mapa en HTML
     map_html = m._repr_html_()
     return render_template("index.html", map_html=map_html, gps_data=gps_data)
 
@@ -56,30 +43,35 @@ def index():
 @app.route("/update", methods=["POST"])
 def update_data():
     data = request.get_json()
-    global gps_data
-    gps_data.update(data)
+    global gps_data, route
 
-    # Guardar datos en un archivo
-    with open(GPS_DATA_FILE, "a") as file:
-        file.write(json.dumps(data) + "\n")
+    gps_data.update(data)
+    route.append([gps_data["latitude"], gps_data["longitude"]])
+
+    # Guardar los datos en el archivo de texto
+    with open(data_file, "a") as file:
+        file.write(f"{data}\n")
 
     return jsonify({"status": "success", "message": "Datos actualizados"})
 
-# Ruta para borrar los datos almacenados
+# Ruta para borrar datos
 @app.route("/clear", methods=["POST"])
 def clear_data():
-    if os.path.exists(GPS_DATA_FILE):
-        os.remove(GPS_DATA_FILE)
-    return redirect(url_for("index"))
+    global route
+    route = []
+    if os.path.exists(data_file):
+        os.remove(data_file)
+    return jsonify({"status": "success", "message": "Datos borrados"})
 
-# Ruta para mostrar todos los datos almacenados
-@app.route("/show", methods=["GET"])
-def show_data():
-    if os.path.exists(GPS_DATA_FILE):
-        with open(GPS_DATA_FILE, "r") as file:
-            positions = [json.loads(line.strip()) for line in file.readlines()]
-        return jsonify({"status": "success", "positions": positions})
-    return jsonify({"status": "error", "message": "No hay datos almacenados"})
+# Ruta para mostrar todos los datos
+@app.route("/show_all", methods=["GET"])
+def show_all_data():
+    if os.path.exists(data_file):
+        with open(data_file, "r") as file:
+            content = file.readlines()
+    else:
+        content = []
+    return jsonify({"status": "success", "data": content})
 
 if __name__ == "__main__":
     app.run(debug=True)
