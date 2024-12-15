@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPS Tracker</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        // Actualizar la página automáticamente cada 2 segundos
+        setInterval(() => {
+            window.location.reload();
+        }, 2000);
+    </script>
 </head>
 <body>
     <header>
@@ -14,7 +20,7 @@
         <div class="map-container">
             {{ map_html|safe }}
         </div>
-        <div class="info-container" style="width: 300px; height: 400px;">
+        <div class="info-container">
             <h2>Datos GPS</h2>
             <p>Latitud: {{ gps_data.latitude }}</p>
             <p>Longitud: {{ gps_data.longitude }}</p>
@@ -23,6 +29,14 @@
             <p>HDOP: {{ gps_data.hdop }}</p>
             <p>Satélites: {{ gps_data.satellites }}</p>
             <p>Hora UTC: {{ gps_data.time }}</p>
+        </div>
+        <div>
+            <form action="/clear" method="post">
+                <button type="submit">Borrar datos</button>
+            </form>
+            <form action="/show" method="get">
+                <button type="submit">Mostrar todos los datos</button>
+            </form>
         </div>
     </main>
 </body>
