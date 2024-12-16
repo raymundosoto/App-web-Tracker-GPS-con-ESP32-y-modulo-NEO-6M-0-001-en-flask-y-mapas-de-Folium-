@@ -34,7 +34,7 @@
         </div>
         <div class="button-container">
             <button onclick="clearData()">Borrar Datos</button>
-            <button onclick="window.location.href='/show_all'">Mostrar Todos los Datos</button>
+            <button onclick="showAllData()">Mostrar Todos los Datos</button>
         </div>
     </main>
     <script>
@@ -42,6 +42,14 @@
             fetch("/clear", { method: "POST" })
                 .then(response => response.json())
                 .then(data => alert(data.message));
+        }
+
+        function showAllData() {
+            fetch("/show_all")
+                .then(response => response.json())
+                .then(data => {
+                    alert("Datos almacenados:\n" + data.data.join("\n"));
+                });
         }
     </script>
 </body>
