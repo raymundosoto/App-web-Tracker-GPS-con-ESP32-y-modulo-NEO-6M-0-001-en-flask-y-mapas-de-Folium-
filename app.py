@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 # Variables globales
 gps_data = {
-    "latitude": 0.000000,  # Coordenadas predeterminadas
-    "longitude": 0.000000,
+    "latitude": 0.000000,  # Coordenadas predeterminadas (Nueva York)
+    "longitude": -0.00000,
     "speed": 0.0,
     "altitude": 0.0,
     "hdop": 0.0,
@@ -20,22 +20,28 @@ data_file = "gps_data.txt"  # Archivo para almacenar datos GPS
 # Página principal
 @app.route("/")
 def index():
-    """Renderiza la página principal con el mapa."""
-    return render_template("index.html", gps_data=gps_data)
+    # Crear el mapa con la última ubicación
+    m = folium.Map(location=[gps_data["latitude"], gps_data["longitude"]], zoom_start=15)
+    
+    # Dibujar la ruta en el mapa si hay datos
+    if route:
+        folium.PolyLine(route, color="blue", weight=2.5, opacity=0.8).add_to(m)
+    
+    # Añadir un marcador en la última posición
+    folium.Marker(
+        location=[gps_data["latitude"], gps_data["longitude"]],
+        popup=f"Lat: {gps_data['latitude']}, Lon: {gps_data['longitude']}",
+        tooltip="Última ubicación",
+        icon=folium.Icon(color="red")
+    ).add_to(m)
 
-# Ruta para obtener los datos actuales
-@app.route("/current_position", methods=["GET"])
-def current_position():
-    """Devuelve los datos GPS actuales y la ruta en formato JSON."""
-    return jsonify({
-        "gps_data": gps_data,
-        "route": route
-    })
+    # Renderizar el mapa en HTML
+    map_html = m._repr_html_()
+    return render_template("index.html", map_html=map_html, gps_data=gps_data)
 
 # Ruta para recibir datos del ESP32
 @app.route("/update", methods=["POST"])
 def update_data():
-    """Actualiza los datos GPS recibidos en formato JSON."""
     data = request.get_json()
     global gps_data, route
 
@@ -51,7 +57,6 @@ def update_data():
 # Ruta para borrar datos
 @app.route("/clear", methods=["POST"])
 def clear_data():
-    """Limpia los datos de la ruta y elimina el archivo de texto."""
     global route
     route = []
     if os.path.exists(data_file):
@@ -61,7 +66,6 @@ def clear_data():
 # Ruta para mostrar todos los datos
 @app.route("/show_all", methods=["GET"])
 def show_all_data():
-    """Muestra todos los datos almacenados en el archivo."""
     if os.path.exists(data_file):
         with open(data_file, "r") as file:
             content = file.readlines()
