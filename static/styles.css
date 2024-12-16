@@ -31,11 +31,14 @@ h1 {
 
 .map-container {
     flex: 2;
-    margin-right: 30px;
-    border-radius: 30px;
+    width: 100%; /* Aseguramos que ocupe todo el ancho disponible */
+    height: 500px; /* Ajustamos una altura adecuada para el mapa */
+    margin-right: 20px;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
+
 
 .info-container {
     flex: 1;
