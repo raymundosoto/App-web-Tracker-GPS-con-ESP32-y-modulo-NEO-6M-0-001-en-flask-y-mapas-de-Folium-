@@ -43,7 +43,7 @@ h1 {
 
 /* Contenedor de los datos GPS, a la derecha del mapa */
 .info-container {
-    flex: 1;
+    flex: 3;
     background-color: #1e1e1e;  /* Fondo oscuro para los datos */
     padding: 20px;
     border-radius: 10px;
