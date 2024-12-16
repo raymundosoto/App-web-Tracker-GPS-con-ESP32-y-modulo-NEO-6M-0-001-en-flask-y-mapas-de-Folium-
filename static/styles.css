@@ -19,7 +19,7 @@ header {
 
 h1 {
     color: #39ff14; /* Verde neon */
-    font-size: 2.5em; /* Aumenté el tamaño del título */
+    font-size: 2em;
 }
 
 .content {
@@ -31,31 +31,26 @@ h1 {
 
 .map-container {
     flex: 2;
-    width: 100%; /* Aseguramos que ocupe todo el ancho disponible */
-    height: 500px; /* Ajustamos una altura adecuada para el mapa */
     margin-right: 20px;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-
 .info-container {
     flex: 1;
-    background-color: #39ff14; /* Fondo verde neon */
-    padding: 20px;
+    background-color: #333; /* Fondo gris oscuro para los datos */
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-    color: #1a1a1d; /* Letra de color oscuro para que sea legible */
 }
 
 h2 {
-    font-size: 1.8em; /* Título más grande */
-    color: #1a1a1d; /* Texto oscuro en los títulos */
+    color: #39ff14; /* Verde neon */
 }
 
 p {
-    font-size: 1.5em; /* Aumenté el tamaño de la letra */
+    font-size: 1.2em;
     line-height: 1.5;
 }
 
@@ -63,17 +58,15 @@ p {
     margin-top: 20px;
     display: flex;
     gap: 20px;
-    justify-content: center;
-    width: 100%;
 }
 
 button {
-    padding: 15px 25px; /* Botones más grandes */
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background-color: #39ff14; /* Verde neon */
     color: #1a1a1d;
-    font-size: 1.5em; /* Aumenté el tamaño de la letra de los botones */
+    font-size: 1em;
     cursor: pointer;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s, background-color 0.2s;
