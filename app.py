@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 # Variables globales
 gps_data = {
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 40.7128,  # Coordenadas predeterminadas (Nueva York)
+    "longitude": -74.0060,
     "speed": 0.0,
     "altitude": 0.0,
     "hdop": 0.0,
@@ -23,7 +23,7 @@ def index():
     # Crear el mapa con la última ubicación
     m = folium.Map(location=[gps_data["latitude"], gps_data["longitude"]], zoom_start=15)
     
-    # Dibujar la ruta en el mapa
+    # Dibujar la ruta en el mapa si hay datos
     if route:
         folium.PolyLine(route, color="blue", weight=2.5, opacity=0.8).add_to(m)
     
