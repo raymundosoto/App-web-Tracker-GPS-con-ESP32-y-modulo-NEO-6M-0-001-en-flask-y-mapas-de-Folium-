@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPS Tracker</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <script>
-        // Actualizar la página automáticamente cada 5 segundos
-        setInterval(() => {
-            window.location.reload();
-        }, 5000);
-    </script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
@@ -18,18 +13,16 @@
     </header>
     <main>
         <div class="content">
-            <div class="map-container">
-                {{ map_html|safe }}
-            </div>
+            <div class="map-container" id="map"></div>
             <div class="info-container">
                 <h2>Datos GPS</h2>
-                <p>Latitud: {{ gps_data.latitude }}</p>
-                <p>Longitud: {{ gps_data.longitude }}</p>
-                <p>Velocidad: {{ gps_data.speed }} km/h</p>
-                <p>Altitud: {{ gps_data.altitude }} m</p>
-                <p>HDOP: {{ gps_data.hdop }}</p>
-                <p>Satélites: {{ gps_data.satellites }}</p>
-                <p>Hora UTC: {{ gps_data.time }}</p>
+                <p id="latitude">Latitud: Cargando...</p>
+                <p id="longitude">Longitud: Cargando...</p>
+                <p id="speed">Velocidad: Cargando...</p>
+                <p id="altitude">Altitud: Cargando...</p>
+                <p id="hdop">HDOP: Cargando...</p>
+                <p id="satellites">Satélites: Cargando...</p>
+                <p id="time">Hora UTC: Cargando...</p>
             </div>
         </div>
         <div class="button-container">
@@ -37,13 +30,56 @@
             <button onclick="showAllData()">Mostrar Todos los Datos</button>
         </div>
     </main>
+
     <script>
+        // Inicializar el mapa
+        const map = L.map('map').setView([0.000000, 0.000000], 15); // Coordenadas iniciales
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Crear marcador
+        let marker = L.marker([0.000000, 0.000000]).addTo(map);
+        let routePolyline = L.polyline([], { color: 'blue' }).addTo(map);
+
+        // Función para actualizar la posición
+        async function updatePosition() {
+            try {
+                const response = await fetch('/current_position');
+                const data = await response.json();
+
+                // Actualizar marcador y vista del mapa
+                const { latitude, longitude, speed, altitude, hdop, satellites, time } = data.gps_data;
+                marker.setLatLng([latitude, longitude]);
+                map.setView([latitude, longitude]);
+
+                // Actualizar la ruta en el mapa
+                routePolyline.setLatLngs(data.route);
+
+                // Actualizar datos en la interfaz
+                document.getElementById('latitude').textContent = `Latitud: ${latitude.toFixed(5)}`;
+                document.getElementById('longitude').textContent = `Longitud: ${longitude.toFixed(5)}`;
+                document.getElementById('speed').textContent = `Velocidad: ${speed} km/h`;
+                document.getElementById('altitude').textContent = `Altitud: ${altitude} m`;
+                document.getElementById('hdop').textContent = `HDOP: ${hdop}`;
+                document.getElementById('satellites').textContent = `Satélites: ${satellites}`;
+                document.getElementById('time').textContent = `Hora UTC: ${time}`;
+            } catch (error) {
+                console.error('Error al obtener los datos de posición:', error);
+            }
+        }
+
+        // Actualizar la posición cada 5 segundos
+        setInterval(updatePosition, 5000);
+
+        // Función para borrar los datos
         function clearData() {
             fetch("/clear", { method: "POST" })
                 .then(response => response.json())
                 .then(data => alert(data.message));
         }
 
+        // Función para mostrar todos los datos
         function showAllData() {
             fetch("/show_all")
                 .then(response => response.json())
