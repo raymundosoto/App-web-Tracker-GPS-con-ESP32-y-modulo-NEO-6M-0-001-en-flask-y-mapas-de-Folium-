@@ -17,8 +17,8 @@
         <h1>GPS Tracker</h1>
     </header>
     <main>
-        <div class="content">
-            <div class="map-container">
+        <div class="map-container">
+            <div class="map">
                 {{ map_html|safe }}
             </div>
             <div class="info-container">
@@ -34,7 +34,6 @@
         </div>
         <div class="button-container">
             <button onclick="clearData()">Borrar Datos</button>
-            <!-- Botón para redirigir a la página de datos -->
             <button onclick="showAllData()">Mostrar Todos los Datos</button>
         </div>
     </main>
