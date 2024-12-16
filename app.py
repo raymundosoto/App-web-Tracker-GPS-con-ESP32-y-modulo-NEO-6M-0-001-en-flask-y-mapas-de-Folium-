@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 # Variables globales
 gps_data = {
-    "latitude": 40.7128,  # Coordenadas predeterminadas (Nueva York)
-    "longitude": -74.0060,
+    "latitude": 0.000000,  # Coordenadas predeterminadas (Nueva York)
+    "longitude": -0.00000,
     "speed": 0.0,
     "altitude": 0.0,
     "hdop": 0.0,

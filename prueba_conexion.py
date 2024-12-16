@@ -10,7 +10,7 @@ center_latitude = 40.7128
 center_longitude = -74.0060
 
 # Función para generar datos de prueba en zonas cercanas
-def generate_position_data(center_lat, center_lon, radius=0.01):
+def generate_position_data(center_lat, center_lon, radius=0.5):
     """
     Genera coordenadas aleatorias cercanas al punto central.
     - center_lat, center_lon: Coordenadas del centro
@@ -21,7 +21,7 @@ def generate_position_data(center_lat, center_lon, radius=0.01):
     return new_lat, new_lon
 
 # Enviar múltiples solicitudes con datos generados
-for _ in range(10):  # Cambia el rango para enviar más datos
+for _ in range(100):  # Cambia el rango para enviar más datos
     # Generar coordenadas cercanas
     latitude, longitude = generate_position_data(center_latitude, center_longitude)
     
