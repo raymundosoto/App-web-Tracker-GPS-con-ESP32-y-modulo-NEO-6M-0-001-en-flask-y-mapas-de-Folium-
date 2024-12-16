@@ -34,22 +34,22 @@
         </div>
         <div class="button-container">
             <button onclick="clearData()">Borrar Datos</button>
+            <!-- Botón para redirigir a la página de datos -->
             <button onclick="showAllData()">Mostrar Todos los Datos</button>
         </div>
     </main>
+
     <script>
+        // Función para borrar los datos
         function clearData() {
             fetch("/clear", { method: "POST" })
                 .then(response => response.json())
                 .then(data => alert(data.message));
         }
 
+        // Función para redirigir a la página donde se muestran todos los datos
         function showAllData() {
-            fetch("/show_all")
-                .then(response => response.json())
-                .then(data => {
-                    alert("Datos almacenados:\n" + data.data.join("\n"));
-                });
+            window.location.href = "/show_all";  // Redirige a la página con todos los datos
         }
     </script>
 </body>
