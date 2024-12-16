@@ -19,7 +19,7 @@ header {
 
 h1 {
     color: #39ff14; /* Verde neon */
-    font-size: 2em;
+    font-size: 2.5em; /* Aumenté el tamaño del título */
 }
 
 .content {
@@ -39,18 +39,20 @@ h1 {
 
 .info-container {
     flex: 1;
-    background-color: #333; /* Fondo gris oscuro para los datos */
-    padding: 15px;
+    background-color: #39ff14; /* Fondo verde neon */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    color: #1a1a1d; /* Letra de color oscuro para que sea legible */
 }
 
 h2 {
-    color: #39ff14; /* Verde neon */
+    font-size: 1.8em; /* Título más grande */
+    color: #1a1a1d; /* Texto oscuro en los títulos */
 }
 
 p {
-    font-size: 1.2em;
+    font-size: 1.5em; /* Aumenté el tamaño de la letra */
     line-height: 1.5;
 }
 
@@ -58,15 +60,17 @@ p {
     margin-top: 20px;
     display: flex;
     gap: 20px;
+    justify-content: center;
+    width: 100%;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 15px 25px; /* Botones más grandes */
     border: none;
     border-radius: 5px;
     background-color: #39ff14; /* Verde neon */
     color: #1a1a1d;
-    font-size: 1em;
+    font-size: 1.5em; /* Aumenté el tamaño de la letra de los botones */
     cursor: pointer;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s, background-color 0.2s;
