@@ -1,58 +1,11 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1d;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-header {
-    background-color: #2c2c34;
-    padding: 10px;
+/* Estilo para los mapas */
+.map-container {
     width: 100%;
-    text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-}
-
-h1 {
-    color: #39ff14;
-    font-size: 2em;
-}
-
-.content {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
+    height: 500px;
     margin-top: 20px;
 }
 
-.map-container {
-    flex: 2;
-    margin-right: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.info-container {
-    flex: 1;
-    background-color: #333;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-}
-
-h2 {
-    color: #39ff14;
-}
-
-p {
-    font-size: 1.2em;
-    line-height: 1.5;
-}
-
+/* Ajuste de los botones */
 .button-container {
     margin-top: 20px;
     display: flex;

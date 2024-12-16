@@ -63,15 +63,32 @@ def clear_data():
         os.remove(data_file)
     return jsonify({"status": "success", "message": "Datos borrados"})
 
-# Ruta para mostrar todos los datos
+# Ruta para mostrar todos los datos en un nuevo mapa
 @app.route("/show_all", methods=["GET"])
 def show_all_data():
+    # Crear un mapa con la primera ubicación
+    m = folium.Map(location=[gps_data["latitude"], gps_data["longitude"]], zoom_start=15)
+
+    # Leer todas las ubicaciones del archivo gps_data.txt
     if os.path.exists(data_file):
         with open(data_file, "r") as file:
-            content = file.readlines()
-    else:
-        content = []
-    return jsonify({"status": "success", "data": content})
+            lines = file.readlines()
+            for line in lines:
+                # Parsear los datos del archivo y agregar los marcadores al mapa
+                data = eval(line.strip())
+                lat = data.get("latitude")
+                lon = data.get("longitude")
+                if lat and lon:
+                    folium.Marker(
+                        location=[lat, lon],
+                        popup=f"Lat: {lat}, Lon: {lon}",
+                        tooltip="Ubicación almacenada",
+                        icon=folium.Icon(color="blue")
+                    ).add_to(m)
+
+    # Renderizar el mapa con todas las ubicaciones
+    map_html = m._repr_html_()
+    return render_template("show_all.html", map_html=map_html)
 
 if __name__ == "__main__":
     app.run(debug=True)

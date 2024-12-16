@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los Datos GPS</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Ubicaciones Registradas</h1>
+    </header>
+    <main>
+        <div class="content">
+            <div class="map-container">
+                {{ map_html|safe }}
+            </div>
+        </div>
+        <div class="button-container">
+            <button onclick="window.location.href='/'">Volver al Inicio</button>
+        </div>
+    </main>
+</body>
+</html>
