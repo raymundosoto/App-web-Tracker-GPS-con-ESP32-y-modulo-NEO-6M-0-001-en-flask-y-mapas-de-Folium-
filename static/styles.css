@@ -1,6 +1,7 @@
+/* Cambios generales en el fondo */
 body {
     font-family: Arial, sans-serif;
-    background-color: #1a1a1d;
+    background-color: #121212;  /* Fondo oscuro */
     color: #fff;
     margin: 0;
     padding: 0;
@@ -9,61 +10,72 @@ body {
     align-items: center;
 }
 
+/* Encabezado */
 header {
-    background-color: #2c2c34;
-    padding: 10px;
+    background-color: #1d1d1f;  /* Fondo ligeramente más oscuro */
+    padding: 15px;
     width: 100%;
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
+/* Título principal con verde neón */
 h1 {
-    color: #39ff14;
-    font-size: 2em;
+    color: #39ff14;  /* Verde neón */
+    font-size: 2.5em;
 }
 
+/* Estilo para la parte que contiene el mapa y los datos */
 .content {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 200%;  /* Asegura que haya más espacio en pantalla */
     margin-top: 20px;
 }
 
+/* Contenedor del mapa */
 .map-container {
     flex: 2;
-    margin-right: 20px;
+    margin-right: 30px;
     border-radius: 10px;
     overflow: hidden;
 }
 
+/* Contenedor de los datos GPS, a la derecha del mapa */
 .info-container {
     flex: 1;
-    background-color: #333;
-    padding: 15px;
+    background-color: #1e1e1e;  /* Fondo oscuro para los datos */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
+/* Encabezados dentro de la sección de datos */
 h2 {
-    color: #39ff14;
+    color: #39ff14;  /* Verde neón */
+    font-size: 1.5em;
 }
 
+/* Estilo para los párrafos de los datos */
 p {
     font-size: 1.2em;
     line-height: 1.5;
+    color: #e0ff00;  /* Color verde neón claro para los datos */
 }
 
+/* Botones */
 .button-container {
     margin-top: 20px;
     display: flex;
     gap: 20px;
 }
 
+/* Estilo del botón con verde neón */
 button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
     border-radius: 5px;
-    background-color: #39ff14;
+    background-color: #39ff14;  /* Verde neón */
     color: #1a1a1d;
     font-size: 1em;
     cursor: pointer;
@@ -71,8 +83,9 @@ button {
     transition: transform 0.2s, background-color 0.2s;
 }
 
+/* Efecto hover para botones */
 button:hover {
     background-color: #2c2c34;
     color: #39ff14;
     transform: scale(1.05);
-} 
+}
