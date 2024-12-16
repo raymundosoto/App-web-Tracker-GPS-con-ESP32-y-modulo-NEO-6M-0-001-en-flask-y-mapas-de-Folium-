@@ -17,19 +17,21 @@
         <h1>GPS Tracker</h1>
     </header>
     <main>
-        <div class="map-container">
-            <div class="map">
-                {{ map_html|safe }}
+        <div class="content">
+            <div class="map-container">
+                <div class="map">
+                    {{ map_html|safe }}
+                </div>
             </div>
             <div class="info-container">
                 <h2>Datos GPS</h2>
-                <p>Latitud: {{ gps_data.latitude }}</p>
-                <p>Longitud: {{ gps_data.longitude }}</p>
-                <p>Velocidad: {{ gps_data.speed }} km/h</p>
-                <p>Altitud: {{ gps_data.altitude }} m</p>
-                <p>HDOP: {{ gps_data.hdop }}</p>
-                <p>Satélites: {{ gps_data.satellites }}</p>
-                <p>Hora UTC: {{ gps_data.time }}</p>
+                <p><strong>Latitud:</strong> {{ gps_data.latitude }}</p>
+                <p><strong>Longitud:</strong> {{ gps_data.longitude }}</p>
+                <p><strong>Velocidad:</strong> {{ gps_data.speed }} km/h</p>
+                <p><strong>Altitud:</strong> {{ gps_data.altitude }} m</p>
+                <p><strong>HDOP:</strong> {{ gps_data.hdop }}</p>
+                <p><strong>Satélites:</strong> {{ gps_data.satellites }}</p>
+                <p><strong>Hora UTC:</strong> {{ gps_data.time }}</p>
             </div>
         </div>
         <div class="button-container">
